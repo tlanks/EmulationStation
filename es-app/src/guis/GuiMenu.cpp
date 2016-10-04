@@ -202,6 +202,7 @@ GuiMenu::GuiMenu(Window* window) : GuiComponent(window), mMenu(window, "MAIN MEN
 						LOG(LogWarning) << "Restart terminated with non-zero result!";
 				}, "NO", nullptr));
 			});
+			/*
 			row.addElement(std::make_shared<TextComponent>(window, "RESTART EMULATIONSTATION", Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
 			s->addRow(row);
 
@@ -213,6 +214,7 @@ GuiMenu::GuiMenu(Window* window) : GuiComponent(window), mMenu(window, "MAIN MEN
 						LOG(LogWarning) << "Restart terminated with non-zero result!";
 				}, "NO", nullptr));
 			});
+			*/
 			row.addElement(std::make_shared<TextComponent>(window, "RESTART SYSTEM", Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
 			s->addRow(row);
 
@@ -226,7 +228,7 @@ GuiMenu::GuiMenu(Window* window) : GuiComponent(window), mMenu(window, "MAIN MEN
 			});
 			row.addElement(std::make_shared<TextComponent>(window, "SHUTDOWN SYSTEM", Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
 			s->addRow(row);
-
+/*
 			if(Settings::getInstance()->getBool("ShowExit"))
 			{
 				row.elements.clear();
@@ -241,7 +243,7 @@ GuiMenu::GuiMenu(Window* window) : GuiComponent(window), mMenu(window, "MAIN MEN
 				row.addElement(std::make_shared<TextComponent>(window, "QUIT EMULATIONSTATION", Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
 				s->addRow(row);
 			}
-
+*/
 			mWindow->pushGui(s);
 	});
 
