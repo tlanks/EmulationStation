@@ -27,10 +27,10 @@ GuiScraperMulti::GuiScraperMulti(Window* window, const std::queue<ScraperSearchP
 	mTotalSkipped = 0;
 
 	// set up grid
-	mTitle = std::make_shared<TextComponent>(mWindow, "SCRAPING IN PROGRESS", Font::get(FONT_SIZE_LARGE), 0x555555FF, ALIGN_CENTER);
+	mTitle = std::make_shared<TextComponent>(mWindow, "正在进行搜刮", Font::get(FONT_SIZE_LARGE), 0x555555FF, ALIGN_CENTER);
 	mGrid.setEntry(mTitle, Vector2i(0, 0), false, true);
 
-	mSystem = std::make_shared<TextComponent>(mWindow, "SYSTEM", Font::get(FONT_SIZE_MEDIUM), 0x777777FF, ALIGN_CENTER);
+	mSystem = std::make_shared<TextComponent>(mWindow, "游戏系统", Font::get(FONT_SIZE_MEDIUM), 0x777777FF, ALIGN_CENTER);
 	mGrid.setEntry(mSystem, Vector2i(0, 1), false, true);
 
 	mSubtitle = std::make_shared<TextComponent>(mWindow, "subtitle text", Font::get(FONT_SIZE_SMALL), 0x888888FF, ALIGN_CENTER);
@@ -47,18 +47,18 @@ GuiScraperMulti::GuiScraperMulti(Window* window, const std::queue<ScraperSearchP
 
 	if(approveResults)
 	{
-		buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "INPUT", "search", [&] { 
+		buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "输入", "search", [&] { 
 			mSearchComp->openInputScreen(mSearchQueue.front()); 
 			mGrid.resetCursor(); 
 		}));
 
-		buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "SKIP", "skip", [&] {
+		buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "跳过", "skip", [&] {
 			skip();
 			mGrid.resetCursor();
 		}));
 	}
 
-	buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "STOP", "stop (progress saved)", std::bind(&GuiScraperMulti::finish, this)));
+	buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "停止", "stop (progress saved)", std::bind(&GuiScraperMulti::finish, this)));
 
 	mButtonGrid = makeButtonGrid(mWindow, buttons);
 	mGrid.setEntry(mButtonGrid, Vector2i(0, 4), true, false);
@@ -101,7 +101,7 @@ void GuiScraperMulti::doNextSearch()
 
 	// update subtitle
 	ss.str(""); // clear
-	ss << "GAME " << (mCurrentGame + 1) << " OF " << mTotalGames << " - " << strToUpper(mSearchQueue.front().game->getPath().filename().string());
+	ss << "游戏 " << (mCurrentGame + 1) << " 个 " << mTotalGames << " - " << strToUpper(mSearchQueue.front().game->getPath().filename().string());
 	mSubtitle->setText(ss.str());
 
 	mSearchComp->search(mSearchQueue.front());
@@ -133,16 +133,16 @@ void GuiScraperMulti::finish()
 	std::stringstream ss;
 	if(mTotalSuccessful == 0)
 	{
-		ss << "NO GAMES WERE SCRAPED.";
+		ss << "没有搜刮到游戏数据.";
 	}else{
-		ss << mTotalSuccessful << " GAME" << ((mTotalSuccessful > 1) ? "S" : "") << " SUCCESSFULLY SCRAPED!";
+		ss << mTotalSuccessful << " 游戏" << ((mTotalSuccessful > 1) ? "" : "") << " 搜刮成功!";
 
 		if(mTotalSkipped > 0)
-			ss << "\n" << mTotalSkipped << " GAME" << ((mTotalSkipped > 1) ? "S" : "") << " SKIPPED.";
+			ss << "\n" << mTotalSkipped << " 游戏" << ((mTotalSkipped > 1) ? "" : "") << " SKIPPED.";
 	}
 
 	mWindow->pushGui(new GuiMsgBox(mWindow, ss.str(), 
-		"OK", [&] { delete this; }));
+		"是", [&] { delete this; }));
 }
 
 std::vector<HelpPrompt> GuiScraperMulti::getHelpPrompts()

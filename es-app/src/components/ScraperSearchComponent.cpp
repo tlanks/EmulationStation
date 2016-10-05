@@ -52,12 +52,12 @@ ScraperSearchComponent::ScraperSearchComponent(Window* window, SearchType type) 
 	mMD_Genre = std::make_shared<TextComponent>(mWindow, "", font, mdColor);
 	mMD_Players = std::make_shared<TextComponent>(mWindow, "", font, mdColor);
 
-	mMD_Pairs.push_back(MetaDataPair(std::make_shared<TextComponent>(mWindow, "RATING:", font, mdLblColor), mMD_Rating, false));
-	mMD_Pairs.push_back(MetaDataPair(std::make_shared<TextComponent>(mWindow, "RELEASED:", font, mdLblColor), mMD_ReleaseDate));
-	mMD_Pairs.push_back(MetaDataPair(std::make_shared<TextComponent>(mWindow, "DEVELOPER:", font, mdLblColor), mMD_Developer));
-	mMD_Pairs.push_back(MetaDataPair(std::make_shared<TextComponent>(mWindow, "PUBLISHER:", font, mdLblColor), mMD_Publisher));
-	mMD_Pairs.push_back(MetaDataPair(std::make_shared<TextComponent>(mWindow, "GENRE:", font, mdLblColor), mMD_Genre));
-	mMD_Pairs.push_back(MetaDataPair(std::make_shared<TextComponent>(mWindow, "PLAYERS:", font, mdLblColor), mMD_Players));
+	mMD_Pairs.push_back(MetaDataPair(std::make_shared<TextComponent>(mWindow, "评分:", font, mdLblColor), mMD_Rating, false));
+	mMD_Pairs.push_back(MetaDataPair(std::make_shared<TextComponent>(mWindow, "发布:", font, mdLblColor), mMD_ReleaseDate));
+	mMD_Pairs.push_back(MetaDataPair(std::make_shared<TextComponent>(mWindow, "开发商:", font, mdLblColor), mMD_Developer));
+	mMD_Pairs.push_back(MetaDataPair(std::make_shared<TextComponent>(mWindow, "发行者:", font, mdLblColor), mMD_Publisher));
+	mMD_Pairs.push_back(MetaDataPair(std::make_shared<TextComponent>(mWindow, "种类:", font, mdLblColor), mMD_Genre));
+	mMD_Pairs.push_back(MetaDataPair(std::make_shared<TextComponent>(mWindow, "玩家数:", font, mdLblColor), mMD_Players));
 
 	mMD_Grid = std::make_shared<ComponentGrid>(mWindow, Vector2i(2, mMD_Pairs.size()*2 - 1));
 	unsigned int i = 0;
@@ -236,7 +236,7 @@ void ScraperSearchComponent::onSearchDone(const std::vector<ScraperSearchResult>
 	if(end == 0)
 	{
 		ComponentListRow row;
-		row.addElement(std::make_shared<TextComponent>(mWindow, "NO GAMES FOUND - SKIP", font, color), true);
+		row.addElement(std::make_shared<TextComponent>(mWindow, "没有发现对应数据 - 跳过", font, color), true);
 
 		if(mSkipCallback)
 			row.makeAcceptInputHandler(mSkipCallback);
@@ -274,9 +274,9 @@ void ScraperSearchComponent::onSearchError(const std::string& error)
 {
 	LOG(LogInfo) << "ScraperSearchComponent search error: " << error;
 	mWindow->pushGui(new GuiMsgBox(mWindow, strToUpper(error),
-		"RETRY", std::bind(&ScraperSearchComponent::search, this, mLastSearch),
-		"SKIP", mSkipCallback,
-		"CANCEL", mCancelCallback));
+		"重试", std::bind(&ScraperSearchComponent::search, this, mLastSearch),
+		"跳过", mSkipCallback,
+		"取消", mCancelCallback));
 }
 
 int ScraperSearchComponent::getSelectedIndex()
