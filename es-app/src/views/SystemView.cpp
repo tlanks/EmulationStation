@@ -46,14 +46,14 @@ void SystemView::populate()
 			ImageComponent* logo = new ImageComponent(mWindow);
 			logo->setMaxSize(Eigen::Vector2f(logoSize().x(), logoSize().y()));
 			logo->applyTheme((*it)->getTheme(), "system", "logo", ThemeFlags::PATH);
-			logo->setPosition((logoSize().x() - logo->getSize().x()) / 2, (logoSize().y() - logo->getSize().y()) / 2); // center
+			logo->setPosition((logoSize().x() - logo->getSize().x()) / 6, 7*(logoSize().y() - logo->getSize().y()) / 8); // center
 			e.data.logo = std::shared_ptr<GuiComponent>(logo);
 
 			ImageComponent* logoSelected = new ImageComponent(mWindow);
 			logoSelected->setMaxSize(Eigen::Vector2f(logoSize().x() * SELECTED_SCALE, logoSize().y() * SELECTED_SCALE * 0.70f));
 			logoSelected->applyTheme((*it)->getTheme(), "system", "logo", ThemeFlags::PATH);
-			logoSelected->setPosition((logoSize().x() - logoSelected->getSize().x()) / 2, 
-				(logoSize().y() - logoSelected->getSize().y()) / 2); // center
+			logoSelected->setPosition((logoSize().x() - logoSelected->getSize().x()) / 6, 
+				7*(logoSize().y() - logoSelected->getSize().y()) / 8); // center
 			e.data.logoSelected = std::shared_ptr<GuiComponent>(logoSelected);
 		}else{
 			// no logo in theme; use text
@@ -292,12 +292,12 @@ void SystemView::render(const Eigen::Affine3f& parentTrans)
 	}
 
 	// draw logos
-	float xOff = (mSize.x() - logoSize().x())/2 - (mCamOffset * logoSizeX);
-	float yOff = (mSize.y() - logoSize().y())/2;
+	float xOff = (mSize.x() - logoSize().x())/6 - (mCamOffset * logoSizeX);
+	float yOff = 7*(mSize.y() - logoSize().y())/8;
 
 	// background behind the logos
 	Renderer::setMatrix(trans);
-	Renderer::drawRect(0.f, (mSize.y() - BAND_HEIGHT) / 2, mSize.x(), BAND_HEIGHT, 0xFFFFFFD8);
+	Renderer::drawRect(0.f, (mSize.y() - BAND_HEIGHT) / 2, mSize.x(), BAND_HEIGHT, 0x00000000);
 
 	Eigen::Affine3f logoTrans = trans;
 	for(int i = center - logoCount/2; i < center + logoCount/2 + 1; i++)
@@ -319,7 +319,7 @@ void SystemView::render(const Eigen::Affine3f& parentTrans)
 		}else{
 			// not selected
 			const std::shared_ptr<GuiComponent>& comp = mEntries.at(index).data.logo;
-			comp->setOpacity(0x80);
+			comp->setOpacity(0x00);
 			comp->render(logoTrans);
 		}
 	}
