@@ -33,7 +33,7 @@ GuiMenu::GuiMenu(Window* window) : GuiComponent(window), mMenu(window, "MAIN MEN
 	// [version]
 
 	auto openScrapeNow = [this] { mWindow->pushGui(new GuiScraperStart(mWindow)); };
-	/*addEntry("搜刮器", 0x777777FF, true, 
+	addEntry("搜刮器", 0x777777FF, true, 
 		[this, openScrapeNow] { 
 			auto s = new GuiSettings(mWindow, "搜刮器");
 
@@ -187,7 +187,7 @@ GuiMenu::GuiMenu(Window* window) : GuiComponent(window), mMenu(window, "MAIN MEN
 		[this] { 
 			mWindow->pushGui(new GuiDetectDevice(mWindow, false, nullptr));
 	});
-*/
+
 	addEntry("退出", 0x777777FF, true, 
 		[this] {
 			auto s = new GuiSettings(mWindow, "退出");
