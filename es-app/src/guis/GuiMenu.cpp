@@ -85,6 +85,7 @@ GuiMenu::GuiMenu(Window* window) : GuiComponent(window), mMenu(window, "MAIN MEN
 
 			mWindow->pushGui(s);
 	});
+	*/
 
 	addEntry("界面设置", 0x777777FF, true,
 		[this] {
@@ -164,7 +165,7 @@ GuiMenu::GuiMenu(Window* window) : GuiComponent(window), mMenu(window, "MAIN MEN
 
 			mWindow->pushGui(s);
 	});
-
+/*
 	addEntry("其他设置", 0x777777FF, true,
 		[this] {
 			auto s = new GuiSettings(mWindow, "其他设置");
@@ -188,15 +189,15 @@ GuiMenu::GuiMenu(Window* window) : GuiComponent(window), mMenu(window, "MAIN MEN
 			mWindow->pushGui(new GuiDetectDevice(mWindow, false, nullptr));
 	});
 */
-	addEntry("退出", 0x777777FF, true, 
+	addEntry("QUIT", 0x777777FF, true, 
 		[this] {
-			auto s = new GuiSettings(mWindow, "退出");
+			auto s = new GuiSettings(mWindow, "QUIT");
 			
 			Window* window = mWindow;
 
 			ComponentListRow row;
 			row.makeAcceptInputHandler([window] {
-				window->pushGui(new GuiMsgBox(window, "确认重启?", "是",
+				window->pushGui(new GuiMsgBox(window, "REALLY RESTART??", "YES",
 				[] {
 					if(quitES("/tmp/es-restart") != 0)
 						LOG(LogWarning) << "Restart terminated with non-zero result!";
@@ -215,18 +216,18 @@ GuiMenu::GuiMenu(Window* window) : GuiComponent(window), mMenu(window, "MAIN MEN
 				}, "否", nullptr));
 			});
 			*/
-			row.addElement(std::make_shared<TextComponent>(window, "重启系统", Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
+			row.addElement(std::make_shared<TextComponent>(window, "RESTART SYSTEM", Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
 			s->addRow(row);
 
 			row.elements.clear();
 			row.makeAcceptInputHandler([window] {
-				window->pushGui(new GuiMsgBox(window, "确认关闭?", "是", 
+				window->pushGui(new GuiMsgBox(window, "QUIT?", "YES", 
 				[] { 
 					if(quitES("/tmp/es-shutdown") != 0)
 						LOG(LogWarning) << "Shutdown terminated with non-zero result!";
-				}, "否", nullptr));
+				}, "NO", nullptr));
 			});
-			row.addElement(std::make_shared<TextComponent>(window, "关闭系统", Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
+			row.addElement(std::make_shared<TextComponent>(window, "QUIT", Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
 			s->addRow(row);
 /*
 			if(Settings::getInstance()->getBool("ShowExit"))

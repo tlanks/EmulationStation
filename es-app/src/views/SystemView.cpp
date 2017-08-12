@@ -293,7 +293,7 @@ void SystemView::render(const Eigen::Affine3f& parentTrans)
 
 	// draw logos
 	float xOff = (mSize.x() - logoSize().x())/6 - (mCamOffset * logoSizeX);
-	float yOff = (mSize.y() - logoSize().y())/8;
+	float yOff = 7*(mSize.y() - logoSize().y())/8;
 
 	// background behind the logos
 	Renderer::setMatrix(trans);
