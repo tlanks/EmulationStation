@@ -31,7 +31,7 @@ GuiMenu::GuiMenu(Window* window) : GuiComponent(window), mMenu(window, "MAIN MEN
 	// 退出 >
 
 	// [version]
-
+/*
 	auto openScrapeNow = [this] { mWindow->pushGui(new GuiScraperStart(mWindow)); };
 	addEntry("搜刮器", 0x777777FF, true, 
 		[this, openScrapeNow] { 
@@ -85,10 +85,10 @@ GuiMenu::GuiMenu(Window* window) : GuiComponent(window), mMenu(window, "MAIN MEN
 
 			mWindow->pushGui(s);
 	});
-
-	addEntry("界面设置", 0x777777FF, true,
+*/
+	addEntry("UI SETTINGS", 0x777777FF, true,
 		[this] {
-			auto s = new GuiSettings(mWindow, "界面设置");
+			auto s = new GuiSettings(mWindow, "UI SETTINGS");
 
 			// screensaver time
 			auto screensaver_time = std::make_shared<SliderComponent>(mWindow, 0.f, 30.f, 1.f, "m");
@@ -125,13 +125,13 @@ GuiMenu::GuiMenu(Window* window) : GuiComponent(window), mMenu(window, "MAIN MEN
 			s->addSaveFunc([quick_sys_select] { Settings::getInstance()->setBool("QuickSystemSelect", quick_sys_select->getState()); });
 
 			// transition style
-			auto transition_style = std::make_shared< OptionListComponent<std::string> >(mWindow, "过渡样式", false);
+			auto transition_style = std::make_shared< OptionListComponent<std::string> >(mWindow, "TRANSITION STYLE", false);
 			std::vector<std::string> transitions;
 			transitions.push_back("fade");
 			transitions.push_back("slide");
 			for(auto it = transitions.begin(); it != transitions.end(); it++)
 				transition_style->add(*it, *it, Settings::getInstance()->getString("TransitionStyle") == *it);
-			s->addWithLabel("过渡样式", transition_style);
+			s->addWithLabel("TRANSITION STYLE", transition_style);
 			s->addSaveFunc([transition_style] { Settings::getInstance()->setString("TransitionStyle", transition_style->getSelected()); });
 
 			// theme set
@@ -143,10 +143,10 @@ GuiMenu::GuiMenu(Window* window) : GuiComponent(window), mMenu(window, "MAIN MEN
 				if(selectedSet == themeSets.end())
 					selectedSet = themeSets.begin();
 
-				auto theme_set = std::make_shared< OptionListComponent<std::string> >(mWindow, "主题设置", false);
+				auto theme_set = std::make_shared< OptionListComponent<std::string> >(mWindow, "ThemeSet", false);
 				for(auto it = themeSets.begin(); it != themeSets.end(); it++)
 					theme_set->add(it->first, it->first, it == selectedSet);
-				s->addWithLabel("主题设置", theme_set);
+				s->addWithLabel("ThemeSet", theme_set);
 
 				Window* window = mWindow;
 				s->addSaveFunc([window, theme_set] 
