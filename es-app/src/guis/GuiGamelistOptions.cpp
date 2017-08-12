@@ -5,7 +5,7 @@
 
 GuiGamelistOptions::GuiGamelistOptions(Window* window, SystemData* system) : GuiComponent(window), 
 	mSystem(system), 
-	mMenu(window, "选项")
+	mMenu(window, "OPTIONS")
 {
 	addChild(&mMenu);
 
@@ -14,12 +14,12 @@ GuiGamelistOptions::GuiGamelistOptions(Window* window, SystemData* system) : Gui
 	if(curChar < 'A' || curChar > 'Z')
 		curChar = 'A';
 
-	mJumpToLetterList = std::make_shared<LetterList>(mWindow, "跳转到字母", false);
+	mJumpToLetterList = std::make_shared<LetterList>(mWindow, "JUMP TO LETTER", false);
 	for(char c = 'A'; c <= 'Z'; c++)
 		mJumpToLetterList->add(std::string(1, c), c, c == curChar);
 
 	ComponentListRow row;
-	row.addElement(std::make_shared<TextComponent>(mWindow, "跳转到字母", Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
+	row.addElement(std::make_shared<TextComponent>(mWindow, "JUMP TO LETTER", Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
 	row.addElement(mJumpToLetterList, false);
 	row.input_handler = [&](InputConfig* config, Input input) {
 		if(config->isMappedTo("a", input) && input.value)
@@ -36,18 +36,18 @@ GuiGamelistOptions::GuiGamelistOptions(Window* window, SystemData* system) : Gui
 	mMenu.addRow(row);
 
 	// sort list by
-	mListSort = std::make_shared<SortList>(mWindow, "游戏排序方式", false);
+	mListSort = std::make_shared<SortList>(mWindow, "SORT GAMES BY", false);
 	for(unsigned int i = 0; i < FileSorts::SortTypes.size(); i++)
 	{
 		const FileData::SortType& sort = FileSorts::SortTypes.at(i);
 		mListSort->add(sort.description, &sort, i == 0); // TODO - actually make the sort type persistent
 	}
 
-	mMenu.addWithLabel("游戏排序方式", mListSort);
+	mMenu.addWithLabel("SORT GAMES BY", mListSort);
 
 	// edit game metadata
 	row.elements.clear();
-	row.addElement(std::make_shared<TextComponent>(mWindow, "编辑此游戏的数据", Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
+	row.addElement(std::make_shared<TextComponent>(mWindow, "EDIT THIS GAME'S METADATA", Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
 	row.addElement(makeArrow(mWindow), false);
 	row.makeAcceptInputHandler(std::bind(&GuiGamelistOptions::openMetaDataEd, this));
 	mMenu.addRow(row);
