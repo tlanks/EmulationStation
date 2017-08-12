@@ -32,7 +32,7 @@ GuiMenu::GuiMenu(Window* window) : GuiComponent(window), mMenu(window, "MAIN MEN
 
 	// [version]
 
-	/*auto openScrapeNow = [this] { mWindow->pushGui(new GuiScraperStart(mWindow)); };
+	auto openScrapeNow = [this] { mWindow->pushGui(new GuiScraperStart(mWindow)); };
 	addEntry("搜刮器", 0x777777FF, true, 
 		[this, openScrapeNow] { 
 			auto s = new GuiSettings(mWindow, "搜刮器");
@@ -85,7 +85,6 @@ GuiMenu::GuiMenu(Window* window) : GuiComponent(window), mMenu(window, "MAIN MEN
 
 			mWindow->pushGui(s);
 	});
-	*/
 
 	addEntry("界面设置", 0x777777FF, true,
 		[this] {
@@ -166,7 +165,7 @@ GuiMenu::GuiMenu(Window* window) : GuiComponent(window), mMenu(window, "MAIN MEN
 			mWindow->pushGui(s);
 	});
 
-	/*addEntry("其他设置", 0x777777FF, true,
+/*	addEntry("其他设置", 0x777777FF, true,
 		[this] {
 			auto s = new GuiSettings(mWindow, "其他设置");
 
