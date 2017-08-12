@@ -93,35 +93,35 @@ GuiMenu::GuiMenu(Window* window) : GuiComponent(window), mMenu(window, "MAIN MEN
 			// screensaver time
 			auto screensaver_time = std::make_shared<SliderComponent>(mWindow, 0.f, 30.f, 1.f, "m");
 			screensaver_time->setValue((float)(Settings::getInstance()->getInt("ScreenSaverTime") / (1000 * 60)));
-			s->addWithLabel("屏幕保护延时", screensaver_time);
+			s->addWithLabel("SCREENSAVER AFTER", screensaver_time);
 			s->addSaveFunc([screensaver_time] { Settings::getInstance()->setInt("ScreenSaverTime", (int)round(screensaver_time->getValue()) * (1000 * 60)); });
 
 			// screensaver behavior
-			auto screensaver_behavior = std::make_shared< OptionListComponent<std::string> >(mWindow, "过渡样式", false);
+			auto screensaver_behavior = std::make_shared< OptionListComponent<std::string> >(mWindow, "TRANSITION STYLE", false);
 			std::vector<std::string> screensavers;
 			screensavers.push_back("dim");
 			screensavers.push_back("black");
 			for(auto it = screensavers.begin(); it != screensavers.end(); it++)
 				screensaver_behavior->add(*it, *it, Settings::getInstance()->getString("ScreenSaverBehavior") == *it);
-			s->addWithLabel("屏幕保护效果", screensaver_behavior);
+			s->addWithLabel("SCREENSAVER BEHAVIOR", screensaver_behavior);
 			s->addSaveFunc([screensaver_behavior] { Settings::getInstance()->setString("ScreenSaverBehavior", screensaver_behavior->getSelected()); });
 
 			// framerate
 			auto framerate = std::make_shared<SwitchComponent>(mWindow);
 			framerate->setState(Settings::getInstance()->getBool("DrawFramerate"));
-			s->addWithLabel("显示帧率", framerate);
+			s->addWithLabel("SHOW FRAMERATE", framerate);
 			s->addSaveFunc([framerate] { Settings::getInstance()->setBool("DrawFramerate", framerate->getState()); });
 
 			// show help
 			auto show_help = std::make_shared<SwitchComponent>(mWindow);
 			show_help->setState(Settings::getInstance()->getBool("ShowHelpPrompts"));
-			s->addWithLabel("显示帮助", show_help);
+			s->addWithLabel("ON-SCREEN HELP", show_help);
 			s->addSaveFunc([show_help] { Settings::getInstance()->setBool("ShowHelpPrompts", show_help->getState()); });
 
 			// quick system select (left/right in game list view)
 			auto quick_sys_select = std::make_shared<SwitchComponent>(mWindow);
 			quick_sys_select->setState(Settings::getInstance()->getBool("QuickSystemSelect"));
-			s->addWithLabel("快速系统选择", quick_sys_select);
+			s->addWithLabel("QUICK SYSTEM SELECT", quick_sys_select);
 			s->addSaveFunc([quick_sys_select] { Settings::getInstance()->setBool("QuickSystemSelect", quick_sys_select->getState()); });
 
 			// transition style
@@ -200,7 +200,7 @@ GuiMenu::GuiMenu(Window* window) : GuiComponent(window), mMenu(window, "MAIN MEN
 				[] {
 					if(quitES("/tmp/es-restart") != 0)
 						LOG(LogWarning) << "Restart terminated with non-zero result!";
-				}, "否", nullptr));
+				}, "NO", nullptr));
 			});
 			/*
 			row.addElement(std::make_shared<TextComponent>(window, "重启ES系统", Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
